@@ -1,0 +1,30 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#F4F1EA"/>
+  <rect x="76" y="52" width="1128" height="616" rx="18" fill="#FFFFFF" stroke="#D8D0C6"/>
+  <text x="112" y="110" fill="#2F3B52" font-family="Arial, sans-serif" font-size="36" font-weight="700">migration_modules_report.xlsx</text>
+  <rect x="112" y="140" width="176" height="36" rx="18" fill="#E8F1E8"/>
+  <text x="136" y="164" fill="#2D7A4A" font-family="Arial, sans-serif" font-size="16" font-weight="700">Generated successfully</text>
+  <rect x="112" y="214" width="220" height="42" rx="10" fill="#EDE6DA"/>
+  <text x="132" y="240" fill="#4D5A70" font-family="Arial, sans-serif" font-size="18" font-weight="700">summary</text>
+  <rect x="348" y="214" width="220" height="42" rx="10" fill="#F7F3EC"/>
+  <text x="368" y="240" fill="#8B7E73" font-family="Arial, sans-serif" font-size="18" font-weight="700">source_modules</text>
+  <rect x="584" y="214" width="220" height="42" rx="10" fill="#F7F3EC"/>
+  <text x="604" y="240" fill="#8B7E73" font-family="Arial, sans-serif" font-size="18" font-weight="700">target_modules</text>
+  <rect x="820" y="214" width="220" height="42" rx="10" fill="#FFF1EE"/>
+  <text x="840" y="240" fill="#B24C3D" font-family="Arial, sans-serif" font-size="18" font-weight="700">missing_in_target</text>
+  <rect x="1056" y="214" width="112" height="42" rx="10" fill="#F2F8F3"/>
+  <text x="1074" y="240" fill="#2D7A4A" font-family="Arial, sans-serif" font-size="18" font-weight="700">common</text>
+  <rect x="112" y="290" width="1056" height="320" rx="14" fill="#FFFDFC" stroke="#E5DED2"/>
+  <rect x="136" y="318" width="460" height="42" rx="8" fill="#EDE6DA"/>
+  <text x="154" y="344" fill="#4D5A70" font-family="Arial, sans-serif" font-size="18" font-weight="700">Metric</text>
+  <rect x="620" y="318" width="180" height="42" rx="8" fill="#EDE6DA"/>
+  <text x="684" y="344" fill="#4D5A70" font-family="Arial, sans-serif" font-size="18" font-weight="700">Value</text>
+  <text x="142" y="410" fill="#2F3B52" font-family="Arial, sans-serif" font-size="24">Source installed modules</text>
+  <text x="690" y="410" fill="#2F3B52" font-family="Arial, sans-serif" font-size="24" font-weight="700">463</text>
+  <text x="142" y="458" fill="#2F3B52" font-family="Arial, sans-serif" font-size="24">Current DB installed modules</text>
+  <text x="690" y="458" fill="#2F3B52" font-family="Arial, sans-serif" font-size="24" font-weight="700">428</text>
+  <text x="142" y="506" fill="#B24C3D" font-family="Arial, sans-serif" font-size="24">Missing in current DB</text>
+  <text x="690" y="506" fill="#B24C3D" font-family="Arial, sans-serif" font-size="24" font-weight="700">35</text>
+  <text x="142" y="554" fill="#2D7A4A" font-family="Arial, sans-serif" font-size="24">Common modules</text>
+  <text x="690" y="554" fill="#2D7A4A" font-family="Arial, sans-serif" font-size="24" font-weight="700">428</text>
+</svg>

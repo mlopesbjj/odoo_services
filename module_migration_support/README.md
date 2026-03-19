@@ -13,6 +13,20 @@ Ele permite:
 
 O foco do aplicativo nao e executar a migracao dos modulos. O objetivo e entregar um relatorio confiavel para analise tecnica e acompanhamento do projeto de migracao.
 
+## Visao geral visual
+
+### Tela de exportacao da base atual
+
+![Tela ficticia de exportacao](static/description/screen_export.svg)
+
+### Tela de comparacao entre origem e destino
+
+![Tela ficticia de comparacao](static/description/screen_compare.svg)
+
+### Exemplo do arquivo final gerado
+
+![Tela ficticia do relatorio final](static/description/screen_report.svg)
+
 ## Como o aplicativo funciona
 
 O modulo cria um menu chamado `Migration Support` no Odoo.

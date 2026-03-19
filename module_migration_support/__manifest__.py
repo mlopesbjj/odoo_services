@@ -4,6 +4,7 @@
     "summary": "Export and compare installed modules between Odoo versions",
     "category": "Tools",
     "author": "Marcio Lopes",
+    "website": "https://github.com/mlopesbjj/odoo_services",
     "license": "LGPL-3",
     "depends": ["base"],
     "data": [
