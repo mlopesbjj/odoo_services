@@ -1,42 +1,42 @@
 # Odoo Services
 
-Este repositorio contem diversos utilitarios para uso com Odoo.
+This repository contains several utilities for Odoo.
 
-O objetivo e centralizar ferramentas de apoio tecnico, automacoes e pequenos aplicativos que ajudam em atividades como:
+Its purpose is to centralize technical support tools, automations, and small applications that help with activities such as:
 
-- migracao de versao;
-- auditoria e comparacao de dados;
-- exportacoes e importacoes auxiliares;
-- administracao tecnica de ambientes Odoo;
-- utilitarios internos para suporte e operacao.
+- version migrations;
+- data auditing and comparison;
+- auxiliary exports and imports;
+- technical administration of Odoo environments;
+- internal utilities for support and operations.
 
-Os componentes deste repositorio podem incluir:
+The components in this repository may include:
 
-- modulos instalaveis no Odoo;
-- scripts de apoio;
-- ferramentas de diagnostico;
-- recursos tecnicos reutilizaveis para projetos Odoo.
+- installable Odoo modules;
+- support scripts;
+- diagnostic tools;
+- reusable technical resources for Odoo projects.
 
-Cada utilitario possui sua propria estrutura e, quando necessario, sua propria documentacao dentro da pasta correspondente.
+Each utility has its own structure and, when needed, its own documentation inside the corresponding folder.
 
-## Estrutura geral
+## General structure
 
-Neste repositorio voce pode encontrar, por exemplo:
+In this repository you may find, for example:
 
-- addons Odoo prontos para instalacao;
-- scripts Python de apoio tecnico;
-- arquivos de configuracao e dependencias;
-- documentacao especifica de cada ferramenta.
+- Odoo addons ready to install;
+- Python scripts for technical support;
+- configuration and dependency files;
+- specific documentation for each tool.
 
-## Documentacao especifica
+## Specific documentation
 
-Para entender o funcionamento de cada utilitario, consulte o `README.md` dentro da pasta do respectivo modulo ou ferramenta.
+To understand how each utility works, check the `README.md` inside the corresponding module or tool folder.
 
-Exemplo:
+Example:
 
-- `module_migration_support/README.md`: documentacao do aplicativo de apoio a migracao de modulos entre versoes do Odoo.
+- `module_migration_support/README.md`: documentation for the application that helps compare installed modules between Odoo versions.
 
-## Observacao
+## Note
 
-Este `README.md` descreve o repositorio de forma geral.
-As regras de uso, instalacao e funcionamento de cada utilitario devem ser consultadas na documentacao especifica de cada item.
+This root `README.md` describes the repository at a general level.
+Installation, usage, and behavior rules for each utility should be read in the specific documentation of each item.
