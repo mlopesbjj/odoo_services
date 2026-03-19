@@ -1,69 +1,42 @@
 # Odoo Services
 
-Ferramentas auxiliares para administracao e migracao de ambientes Odoo.
+Este repositorio contem diversos utilitarios para uso com Odoo.
 
-## Relatorio de modulos instalados
+O objetivo e centralizar ferramentas de apoio tecnico, automacoes e pequenos aplicativos que ajudam em atividades como:
 
-O script `tools/odoo_module_migration_report.py` permite:
+- migracao de versao;
+- auditoria e comparacao de dados;
+- exportacoes e importacoes auxiliares;
+- administracao tecnica de ambientes Odoo;
+- utilitarios internos para suporte e operacao.
 
-- exportar os modulos instalados de um banco Odoo para Excel;
-- comparar dois bancos Odoo; ou
-- comparar um Excel exportado da versao antiga com um banco da versao nova.
+Os componentes deste repositorio podem incluir:
 
-### Dependencias
+- modulos instalaveis no Odoo;
+- scripts de apoio;
+- ferramentas de diagnostico;
+- recursos tecnicos reutilizaveis para projetos Odoo.
 
-```bash
-pip install -r requirements.txt
-```
+Cada utilitario possui sua propria estrutura e, quando necessario, sua propria documentacao dentro da pasta correspondente.
 
-### Exportar modulos instalados
+## Estrutura geral
 
-```bash
-python tools/odoo_module_migration_report.py export \
-  --host localhost \
-  --port 5432 \
-  --database odoo16_db \
-  --user odoo \
-  --password secret \
-  --output odoo16_installed_modules.xlsx
-```
+Neste repositorio voce pode encontrar, por exemplo:
 
-### Comparar banco antigo com banco novo
+- addons Odoo prontos para instalacao;
+- scripts Python de apoio tecnico;
+- arquivos de configuracao e dependencias;
+- documentacao especifica de cada ferramenta.
 
-```bash
-python tools/odoo_module_migration_report.py compare \
-  --source-host localhost \
-  --source-port 5432 \
-  --source-database odoo16_db \
-  --source-user odoo \
-  --source-password secret \
-  --target-host localhost \
-  --target-port 5432 \
-  --target-database odoo18_db \
-  --target-user odoo \
-  --target-password secret \
-  --output migration_modules_report.xlsx
-```
+## Documentacao especifica
 
-### Comparar Excel antigo com banco novo
+Para entender o funcionamento de cada utilitario, consulte o `README.md` dentro da pasta do respectivo modulo ou ferramenta.
 
-```bash
-python tools/odoo_module_migration_report.py compare \
-  --source-xlsx odoo16_installed_modules.xlsx \
-  --target-host localhost \
-  --target-port 5432 \
-  --target-database odoo18_db \
-  --target-user odoo \
-  --target-password secret \
-  --output migration_modules_report.xlsx
-```
+Exemplo:
 
-### Resultado
+- `module_migration_support/README.md`: documentacao do aplicativo de apoio a migracao de modulos entre versoes do Odoo.
 
-O arquivo Excel de comparacao contem:
+## Observacao
 
-- `source_modules`: modulos instalados na origem;
-- `target_modules`: modulos instalados no destino;
-- `missing_in_target`: modulos instalados na origem e ausentes no destino;
-- `common_modules`: modulos encontrados em ambos;
-- `summary`: contagem geral para apoio de migracao.
+Este `README.md` descreve o repositorio de forma geral.
+As regras de uso, instalacao e funcionamento de cada utilitario devem ser consultadas na documentacao especifica de cada item.
