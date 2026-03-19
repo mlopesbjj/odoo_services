@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_module_migration_report_system,module.migration.report system,model_module_migration_report,base.group_system,1,1,1,1
+access_module_migration_report_line_system,module.migration.report.line system,model_module_migration_report_line,base.group_system,1,1,1,1

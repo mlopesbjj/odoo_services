@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_module_migration_report_tree" model="ir.ui.view">
+        <field name="name">module.migration.report.tree</field>
+        <field name="model">module.migration.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="source_module_count"/>
+                <field name="target_module_count"/>
+                <field name="missing_module_count"/>
+                <field name="common_module_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_module_migration_report_form" model="ir.ui.view">
+        <field name="name">module.migration.report.form</field>
+        <field name="model">module.migration.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_export_current_modules"
+                        type="object"
+                        string="Export Current DB"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_compare_modules"
+                        type="object"
+                        string="Compare Modules"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_open_export_file"
+                        type="object"
+                        string="Download Export"
+                        attrs="{'invisible': [('export_file', '=', False)]}"
+                    />
+                    <button
+                        name="action_open_result_file"
+                        type="object"
+                        string="Download Report"
+                        attrs="{'invisible': [('result_file', '=', False)]}"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="source_file" filename="source_filename"/>
+                            <field name="source_filename" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="source_module_count" readonly="1"/>
+                            <field name="target_module_count" readonly="1"/>
+                            <field name="missing_module_count" readonly="1"/>
+                            <field name="common_module_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Generated Files" col="2">
+                        <field name="export_file" filename="export_filename" readonly="1"/>
+                        <field name="result_file" filename="result_filename" readonly="1"/>
+                        <field name="export_filename" invisible="1"/>
+                        <field name="result_filename" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Missing Modules">
+                            <field name="line_ids" readonly="1">
+                                <tree>
+                                    <field name="module_name"/>
+                                    <field name="display_name"/>
+                                    <field name="installed_version"/>
+                                    <field name="latest_version"/>
+                                    <field name="author"/>
+                                    <field name="category"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_module_migration_report" model="ir.actions.act_window">
+        <field name="name">Module Migration Support</field>
+        <field name="res_model">module.migration.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_module_migration_root"
+        name="Migration Support"
+        sequence="90"
+        groups="base.group_system"
+    />
+
+    <menuitem
+        id="menu_module_migration_report"
+        name="Installed Modules Report"
+        parent="menu_module_migration_root"
+        action="action_module_migration_report"
+        sequence="10"
+        groups="base.group_system"
+    />
+</odoo>
