@@ -34,6 +34,11 @@
                         class="btn-primary"
                     />
                     <button
+                        name="action_scan_custom_fields"
+                        type="object"
+                        string="Scan Custom Fields"
+                    />
+                    <button
                         name="action_open_export_file"
                         type="object"
                         string="Download Export"
@@ -44,6 +49,12 @@
                         type="object"
                         string="Download Report"
                         attrs="{'invisible': [('result_file', '=', False)]}"
+                    />
+                    <button
+                        name="action_open_custom_fields_file"
+                        type="object"
+                        string="Download Custom Fields"
+                        attrs="{'invisible': [('custom_fields_file', '=', False)]}"
                     />
                 </header>
                 <sheet>
@@ -58,13 +69,16 @@
                             <field name="target_module_count" readonly="1"/>
                             <field name="missing_module_count" readonly="1"/>
                             <field name="common_module_count" readonly="1"/>
+                            <field name="custom_field_count" readonly="1"/>
                         </group>
                     </group>
                     <group string="Generated Files" col="2">
                         <field name="export_file" filename="export_filename" readonly="1"/>
                         <field name="result_file" filename="result_filename" readonly="1"/>
+                        <field name="custom_fields_file" filename="custom_fields_filename" readonly="1"/>
                         <field name="export_filename" invisible="1"/>
                         <field name="result_filename" invisible="1"/>
+                        <field name="custom_fields_filename" invisible="1"/>
                     </group>
                     <notebook>
                         <page string="Missing Modules">
@@ -76,6 +90,19 @@
                                     <field name="latest_version"/>
                                     <field name="author"/>
                                     <field name="category"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Custom Fields">
+                            <field name="custom_field_line_ids" readonly="1">
+                                <tree>
+                                    <field name="model_name"/>
+                                    <field name="field_name"/>
+                                    <field name="field_label"/>
+                                    <field name="field_type"/>
+                                    <field name="origin"/>
+                                    <field name="origin_module"/>
+                                    <field name="state"/>
                                 </tree>
                             </field>
                         </page>

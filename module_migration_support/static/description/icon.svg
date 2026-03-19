@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <rect x="76" y="86" width="360" height="340" rx="34" fill="#FFFDF9" stroke="#E3D8C9" stroke-width="4"/>
+  <rect x="108" y="122" width="128" height="26" rx="13" fill="#EFE5D7"/>
+  <rect x="246" y="122" width="72" height="26" rx="13" fill="#F3ECE2"/>
+  <rect x="328" y="122" width="72" height="26" rx="13" fill="#F3ECE2"/>
+
+  <rect x="108" y="176" width="126" height="88" rx="22" fill="#FBF8F2" stroke="#E8DECF" stroke-width="3"/>
+  <text x="128" y="208" fill="#857667" font-family="Arial, sans-serif" font-size="18" font-weight="700">Source</text>
+  <text x="128" y="246" fill="#24324B" font-family="Arial, sans-serif" font-size="40" font-weight="700">463</text>
+
+  <rect x="278" y="176" width="126" height="88" rx="22" fill="#FBF8F2" stroke="#E8DECF" stroke-width="3"/>
+  <text x="298" y="208" fill="#857667" font-family="Arial, sans-serif" font-size="18" font-weight="700">Target</text>
+  <text x="298" y="246" fill="#24324B" font-family="Arial, sans-serif" font-size="40" font-weight="700">428</text>
+
+  <path d="M242 220H270" stroke="#B14C3D" stroke-width="10" stroke-linecap="round"/>
+  <path d="M260 202L278 220L260 238" stroke="#B14C3D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="108" y="296" width="296" height="88" rx="22" fill="#FFF4F1" stroke="#E3B0A7" stroke-width="3"/>
+  <text x="132" y="330" fill="#8B6B61" font-family="Arial, sans-serif" font-size="18" font-weight="700">Missing in target</text>
+  <text x="132" y="366" fill="#B14C3D" font-family="Arial, sans-serif" font-size="42" font-weight="700">35 modules</text>
+
+  <circle cx="372" cy="340" r="28" fill="#B14C3D"/>
+  <path d="M359 340L368 349L386 331" stroke="#FFFDF9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <defs>
+    <linearGradient id="bg" x1="56" y1="38" x2="456" y2="474" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2E6D5"/>
+      <stop offset="1" stop-color="#E8EEF2"/>
+    </linearGradient>
+  </defs>
+</svg>

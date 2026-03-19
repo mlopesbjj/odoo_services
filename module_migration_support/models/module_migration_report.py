@@ -20,6 +20,16 @@ HEADERS = [
     "state",
 ]
 
+FIELD_HEADERS = [
+    "model_name",
+    "field_name",
+    "field_label",
+    "field_type",
+    "origin",
+    "origin_module",
+    "state",
+]
+
 
 class ModuleMigrationReport(models.Model):
     _name = "module.migration.report"
@@ -37,14 +47,23 @@ class ModuleMigrationReport(models.Model):
     export_filename = fields.Char(string="Export Filename", readonly=True)
     result_file = fields.Binary(string="Comparison XLSX", readonly=True)
     result_filename = fields.Char(string="Result Filename", readonly=True)
+    custom_fields_file = fields.Binary(string="Custom Fields XLSX", readonly=True)
+    custom_fields_filename = fields.Char(string="Custom Fields Filename", readonly=True)
     source_module_count = fields.Integer(string="Source Modules", readonly=True)
     target_module_count = fields.Integer(string="Current DB Modules", readonly=True)
     missing_module_count = fields.Integer(string="Missing in Current DB", readonly=True)
     common_module_count = fields.Integer(string="Common Modules", readonly=True)
+    custom_field_count = fields.Integer(string="Custom Fields", readonly=True)
     line_ids = fields.One2many(
         "module.migration.report.line",
         "report_id",
         string="Missing Modules",
+        readonly=True,
+    )
+    custom_field_line_ids = fields.One2many(
+        "module.migration.custom.field.line",
+        "report_id",
+        string="Custom Fields",
         readonly=True,
     )
 
@@ -108,6 +127,26 @@ class ModuleMigrationReport(models.Model):
             )
         return True
 
+    def action_scan_custom_fields(self):
+        for record in self:
+            custom_fields = record._get_custom_fields_inventory()
+            content = record._build_custom_fields_workbook(custom_fields)
+
+            line_commands = [(5, 0, 0)]
+            for field_data in custom_fields:
+                line_commands.append((0, 0, field_data))
+
+            filename = "custom_fields_inventory_%s.xlsx" % fields.Date.today()
+            record.write(
+                {
+                    "custom_fields_file": base64.b64encode(content),
+                    "custom_fields_filename": filename,
+                    "custom_field_count": len(custom_fields),
+                    "custom_field_line_ids": line_commands,
+                }
+            )
+        return True
+
     def action_open_export_file(self):
         self.ensure_one()
         if not self.export_file:
@@ -119,6 +158,14 @@ class ModuleMigrationReport(models.Model):
         if not self.result_file:
             raise UserError(_("Generate the comparison file first."))
         return self._download_action("result_file", self.result_filename)
+
+    def action_open_custom_fields_file(self):
+        self.ensure_one()
+        if not self.custom_fields_file:
+            raise UserError(_("Generate the custom fields inventory first."))
+        return self._download_action(
+            "custom_fields_file", self.custom_fields_filename
+        )
 
     def _download_action(self, field_name, filename):
         self.ensure_one()
@@ -135,6 +182,20 @@ class ModuleMigrationReport(models.Model):
         )
         return [self._serialize_module(module) for module in modules]
 
+    def _get_custom_fields_inventory(self):
+        installed_modules = self.env["ir.module.module"].search(
+            [("state", "=", "installed")]
+        )
+        module_map = {module.name: module for module in installed_modules}
+        custom_fields = []
+        field_records = self.env["ir.model.fields"].search([], order="model,name")
+
+        for field in field_records:
+            field_data = self._serialize_custom_field(field, module_map)
+            if field_data:
+                custom_fields.append(field_data)
+        return custom_fields
+
     def _serialize_module(self, module):
         return {
             "name": module.name or "",
@@ -147,6 +208,55 @@ class ModuleMigrationReport(models.Model):
             "auto_install": bool(module.auto_install),
             "state": module.state or "",
         }
+
+    def _serialize_custom_field(self, field, module_map):
+        modules = [
+            module_name.strip()
+            for module_name in (field.modules or "").split(",")
+            if module_name.strip()
+        ]
+        non_official_modules = [
+            module_name
+            for module_name in modules
+            if self._is_non_official_module(module_map.get(module_name))
+        ]
+
+        origin = False
+        origin_module = False
+        if field.name.startswith("x_studio_"):
+            origin = "Studio"
+            origin_module = "web_studio"
+        elif field.state == "manual" and field.name.startswith("x_"):
+            origin = "Manual"
+            origin_module = "manual"
+        elif non_official_modules:
+            origin = "Module"
+            origin_module = ", ".join(non_official_modules)
+        elif field.name.startswith("x_"):
+            origin = "Custom"
+            origin_module = ", ".join(modules) if modules else "unknown"
+
+        if not origin:
+            return False
+
+        return {
+            "model_name": field.model or "",
+            "field_name": field.name or "",
+            "field_label": field.field_description or "",
+            "field_type": field.ttype or "",
+            "origin": origin,
+            "origin_module": origin_module or "",
+            "state": field.state or "",
+        }
+
+    def _is_non_official_module(self, module):
+        if not module:
+            return False
+        author = (module.author or "").lower()
+        if not author:
+            return True
+        official_markers = ["odoo", "openerp"]
+        return not any(marker in author for marker in official_markers)
 
     def _load_modules_from_xlsx(self):
         self.ensure_one()
@@ -248,6 +358,15 @@ class ModuleMigrationReport(models.Model):
         workbook.save(output)
         return output.getvalue()
 
+    def _build_custom_fields_workbook(self, custom_fields):
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.title = "custom_fields"
+        self._write_custom_fields_sheet(sheet, custom_fields)
+        output = BytesIO()
+        workbook.save(output)
+        return output.getvalue()
+
     def _write_sheet(self, sheet, modules):
         sheet.append(HEADERS)
         for cell in sheet[1]:
@@ -255,6 +374,14 @@ class ModuleMigrationReport(models.Model):
         for module in modules:
             sheet.append([module.get(header, "") for header in HEADERS])
         self._autosize(sheet)
+
+    def _write_custom_fields_sheet(self, sheet, custom_fields):
+        sheet.append(FIELD_HEADERS)
+        for cell in sheet[1]:
+            cell.font = Font(bold=True)
+        for field_data in custom_fields:
+            sheet.append([field_data.get(header, "") for header in FIELD_HEADERS])
+        self._autosize_fields(sheet)
 
     def _autosize(self, sheet, columns=None):
         if columns is None:
@@ -266,6 +393,10 @@ class ModuleMigrationReport(models.Model):
                 if len(value) > max_length:
                     max_length = len(value)
             sheet.column_dimensions[column].width = min(max_length + 2, 60)
+
+    def _autosize_fields(self, sheet):
+        columns = [chr(ord("A") + index) for index in range(len(FIELD_HEADERS))]
+        self._autosize(sheet, columns=columns)
 
 
 class ModuleMigrationReportLine(models.Model):
@@ -284,3 +415,22 @@ class ModuleMigrationReportLine(models.Model):
     latest_version = fields.Char(string="Source Latest Version", readonly=True)
     author = fields.Char(string="Author", readonly=True)
     category = fields.Char(string="Category", readonly=True)
+
+
+class ModuleMigrationCustomFieldLine(models.Model):
+    _name = "module.migration.custom.field.line"
+    _description = "Module Migration Custom Field Line"
+    _order = "model_name, field_name"
+
+    report_id = fields.Many2one(
+        "module.migration.report",
+        required=True,
+        ondelete="cascade",
+    )
+    model_name = fields.Char(string="Model", readonly=True)
+    field_name = fields.Char(string="Field Name", readonly=True)
+    field_label = fields.Char(string="Field Label", readonly=True)
+    field_type = fields.Char(string="Field Type", readonly=True)
+    origin = fields.Char(string="Origin", readonly=True)
+    origin_module = fields.Char(string="Origin Module", readonly=True)
+    state = fields.Char(string="State", readonly=True)
