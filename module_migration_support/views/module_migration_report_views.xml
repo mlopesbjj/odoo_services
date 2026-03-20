@@ -4,14 +4,14 @@
         <field name="name">module.migration.report.tree</field>
         <field name="model">module.migration.report</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="create_date"/>
                 <field name="source_module_count"/>
                 <field name="target_module_count"/>
                 <field name="missing_module_count"/>
                 <field name="common_module_count"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -42,19 +42,19 @@
                         name="action_open_export_file"
                         type="object"
                         string="Download Export"
-                        attrs="{'invisible': [('export_file', '=', False)]}"
+                        invisible="not export_file"
                     />
                     <button
                         name="action_open_result_file"
                         type="object"
                         string="Download Report"
-                        attrs="{'invisible': [('result_file', '=', False)]}"
+                        invisible="not result_file"
                     />
                     <button
                         name="action_open_custom_fields_file"
                         type="object"
                         string="Download Custom Fields"
-                        attrs="{'invisible': [('custom_fields_file', '=', False)]}"
+                        invisible="not custom_fields_file"
                     />
                 </header>
                 <sheet>
@@ -83,19 +83,19 @@
                     <notebook>
                         <page string="Missing Modules">
                             <field name="line_ids" readonly="1">
-                                <tree>
+                                <list>
                                     <field name="module_name"/>
                                     <field name="display_name"/>
                                     <field name="installed_version"/>
                                     <field name="latest_version"/>
                                     <field name="author"/>
                                     <field name="category"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Custom Fields">
                             <field name="custom_field_line_ids" readonly="1">
-                                <tree>
+                                <list>
                                     <field name="model_name"/>
                                     <field name="field_name"/>
                                     <field name="field_label"/>
@@ -103,7 +103,7 @@
                                     <field name="origin"/>
                                     <field name="origin_module"/>
                                     <field name="state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -115,13 +115,14 @@
     <record id="action_module_migration_report" model="ir.actions.act_window">
         <field name="name">Module Migration Support</field>
         <field name="res_model">module.migration.report</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem
         id="menu_module_migration_root"
         name="Migration Support"
         sequence="90"
+        web_icon="module_migration_support,static/description/icon.png"
         groups="base.group_system"
     />
 

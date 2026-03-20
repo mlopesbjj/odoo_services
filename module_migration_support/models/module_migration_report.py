@@ -171,8 +171,8 @@ class ModuleMigrationReport(models.Model):
         self.ensure_one()
         return {
             "type": "ir.actions.act_url",
-            "url": "/web/content/%s/%s/%s?download=true"
-            % (self._name, self.id, field_name),
+            "url": "/web/content/%s/%s/%s/%s?download=true"
+            % (self._name, self.id, field_name, filename or field_name),
             "target": "self",
         }
 
